@@ -2,6 +2,7 @@ package chans
 
 import (
 	"fmt"
+	"github.com/0x111/telegram-rss-bot/conf"
 	"github.com/0x111/telegram-rss-bot/feeds"
 	"github.com/0x111/telegram-rss-bot/replies"
 	log "github.com/sirupsen/logrus"
@@ -22,11 +23,15 @@ func FeedUpdates() {
 // Post Feed data to the channel
 func FeedPosts(Bot *tgbotapi.BotAPI) {
 	feedPosts := feeds.PostFeedUpdatesChan()
+	feedJoin := conf.GetConfig().GetString("feed_join")
+	if feedJoin == "" {
+		feedJoin = " - "
+	}
 
 	for feedPost := range feedPosts {
 		msg := fmt.Sprintf(`
-	%s - %s
-	`, feedPost.Title, feedPost.Link)
+	%s%s%s
+	`, feedPost.Title, feedJoin, feedPost.Link)
 		log.WithFields(log.Fields{"feedPost": feedPost, "chatID": feedPost.ChatID}).Debug("Posting feed update to the Telegram API")
 		err := replies.SimpleMessage(Bot, feedPost.ChatID, 0, msg)
 		if err == nil {

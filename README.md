@@ -27,7 +27,8 @@ You can put the config file in the current folder on where the binary resides or
   "feed_parse_amount": 5,
   "feed_post_amount": 2,
   "feed_updates_interval": 600,
-  "feed_posts_interval": 400
+  "feed_posts_interval": 400,
+  "feed_join": " - "
 }
 ```
 
