@@ -35,7 +35,7 @@ func SimpleMessage(botAPI *tgbotapi.BotAPI, chatid int64, messageid int, text st
 		msg.ReplyToMessageID = messageid
 	}
 
-	msg.ParseMode = "markdown"
+	msg.ParseMode = "html"
 	msg.DisableWebPagePreview = false
 
 	_, err := botAPI.Send(msg)
